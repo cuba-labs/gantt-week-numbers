@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.company.demo.web" xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd">
+
+    <data readOnly="true">
+        <collection id="taskSpansDc" class="com.company.demo.entity.DateTaskSpan" view="_local">
+            <loader id="taskSpansDl"/>
+        </collection>
+    </data>
+
+    <layout>
+        <chart:ganttChart id="ganttChart"
+                          caption="Gantt Chart"
+                          additionalSegmentFields="task"
+                          balloonDateFormat="JJ:NN"
+                          brightnessStep="7"
+                          categoryField="category"
+                          colorField="color"
+                          columnWidth="0.5"
+                          dataContainer="taskSpansDc"
+                          endDateField="end"
+                          height="100%"
+                          marginRight="70"
+                          period="DAYS"
+                          rotate="true"
+                          segmentsField="segments"
+                          startDateField="start"
+                          width="100%">
+
+            <chart:graph balloonText="&lt;strong&gt;[[task]]&lt;/strong&gt;: [[open]] - [[value]]"
+                         fillAlphas="1"
+                         lineAlpha="1"
+                         lineColor="WHITE"/>
+            <chart:valueAxis type="DATE">
+                <chart:labelFunction>
+                    <![CDATA[
+                        function(valueText, value, valueAxis) {
+                          console.log(value);
+                          return valueText + AmCharts.formatDate(value, ' (W)');
+                        }
+                    ]]>
+                </chart:labelFunction>
+            </chart:valueAxis>
+            <chart:valueScrollbar autoGridCount="true"
+                                  color="BLACK"/>
+            <chart:chartCursor cursorAlpha="0"
+                               cursorColor="#55bb76"
+                               fullWidth="true"
+                               valueLineAlpha="0.5"
+                               valueLineEnabled="true"
+                               valueZoomable="true"
+                               zoomable="false"/>
+            <chart:export/>
+        </chart:ganttChart>
+    </layout>
+</window>
